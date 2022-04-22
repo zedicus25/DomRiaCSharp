@@ -11,10 +11,10 @@ namespace DomRia.InfoResources
         public Price(double usdPrice)
         {
             UsdPrice = usdPrice;
-            GrnPrice = ConvertToUsd();
+            GrnPrice = ConvertToGrn();
         }
         
-        private double ConvertToUsd() => GrnPrice * 0.034;
+        private double ConvertToGrn() => UsdPrice * 29.94;
 
         public override string ToString()
         {
@@ -23,6 +23,23 @@ namespace DomRia.InfoResources
             sb.Append(GrnPrice + "GRN\t");
             sb.AppendLine();
             return sb.ToString();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is Price)
+            {
+                Price tmp = obj as Price;
+                if (tmp.GetHashCode() == GetHashCode())
+                    return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return GrnPrice.GetHashCode() ^ UsdPrice.GetHashCode();
         }
     }
 }

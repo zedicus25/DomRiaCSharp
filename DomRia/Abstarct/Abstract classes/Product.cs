@@ -20,6 +20,24 @@ namespace DomRia.AbstractClasses
             Realtor = new Contact(realtor);  
         }
 
+        public override bool Equals(object? obj)
+        {
+            if (obj is Product)
+            {
+                Product tmp = obj as Product;
+                if (tmp.GetHashCode() == GetHashCode())
+                    return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Title.GetHashCode() ^ Description.GetHashCode() ^ Location.GetHashCode() ^ Cost.GetHashCode() ^
+                   Realtor.GetHashCode();
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

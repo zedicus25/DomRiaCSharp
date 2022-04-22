@@ -1,4 +1,5 @@
 
+using System;
 using System.Text;
 
 namespace DomRia.InfoResources
@@ -30,8 +31,25 @@ namespace DomRia.InfoResources
             sb.Append("  " + Name + "\t");
             sb.Append(LastName + "\t");
             sb.Append(PhoneNumber);
-            sb.AppendLine(PhoneNumber);
+            sb.AppendLine();
             return sb.ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() ^ LastName.GetHashCode() ^ PhoneNumber.GetHashCode();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is Contact)
+            {
+                Contact tmp = obj as Contact;
+                if (tmp.GetHashCode() == GetHashCode())
+                    return true;
+            }
+
+            return false;
         }
     }
 }

@@ -35,5 +35,22 @@ namespace DomRia.InfoResources
             sb.AppendLine();
             return sb.ToString();
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is Location)
+            {
+                Location tmp = obj as Location;
+                if (tmp.GetHashCode() == GetHashCode())
+                    return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return City.GetHashCode() ^ District.GetHashCode() ^ Street.GetHashCode() ^ HouseNumber.GetHashCode();
+        }
     }
 }

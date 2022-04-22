@@ -1,4 +1,5 @@
 ﻿using System;
+using DomRia.Realization;
 
 namespace DomRia
 {
@@ -6,7 +7,14 @@ namespace DomRia
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Manager ma = new Manager();
+            ma.AddProduct();
+           // ma.AddProduct();
+           // ma.AddProduct();
+            Console.Clear();
+           // ma.DeleteProduct("title1");
+            ma.ShowAll();
         }
+
     }
 }
