@@ -9,11 +9,10 @@ namespace DomRia
         {
             Manager ma = new Manager();
             ma.AddProduct();
-           // ma.AddProduct();
-           // ma.AddProduct();
+            ma.AddProduct();
             Console.Clear();
-           // ma.DeleteProduct("title1");
             ma.ShowAll();
+            ma.SaveToFile();
         }
 
     }

@@ -41,7 +41,7 @@ namespace DomRia.AbstractClasses
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(Title);
+            sb.AppendLine(Title);
             sb.AppendLine(Location.ToString());
             sb.AppendLine(Cost.ToString());
             sb.AppendLine(Description);

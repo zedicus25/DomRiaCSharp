@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 using DomRia.AbstractClasses;
 using DomRia.InfoResources;
@@ -10,16 +12,14 @@ namespace DomRia.Realization
 {
     public class Manager
     {
-        public Contact Realtor { get; set; }
         private List<Product> _products;
 
-        private List<Func<string, string, Location, Price, Product>> _create;
+        private List<Func<string, string, Location, Price,Contact, Product>> _create;
 
         public Manager()
         {
-            Realtor = new Contact("Jonh", "Brush", "+380982191517");
             _products = new List<Product>();
-            _create = new List<Func<string, string, Location, Price, Product>>
+            _create = new List<Func<string, string, Location, Price,Contact, Product>>
             {
                 CreateApartment,
                 CreateHouse
@@ -28,6 +28,12 @@ namespace DomRia.Realization
 
         public void AddProduct()
         {
+            Console.WriteLine("Enter last name of realtor");
+            string lastName = Console.ReadLine();
+            Console.WriteLine("Enter name of realtor");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter phone number of realtor");
+            string number = Console.ReadLine();
             Console.WriteLine("Enter type of product: ");
             Console.WriteLine("1-Apartment");
             Console.WriteLine("2-House");
@@ -65,7 +71,7 @@ namespace DomRia.Realization
                 return;
             }
             AddProduct(_create[type-1]?.Invoke(title,description, new Location(city,district,street,num), 
-                new Price(price)));
+                new Price(price), new Contact(name, lastName,number)));
         }
 
         public void AddProduct(Product product)
@@ -87,7 +93,19 @@ namespace DomRia.Realization
 
         public void SaveToFile()
         {
-            
+            StringBuilder sb = new StringBuilder();
+            foreach (var p in _products)
+            {
+                sb.AppendLine(p.ToString());
+            }
+            if (File.Exists("dataBase.txt"))
+            {
+                File.AppendAllText("dataBase.txt",sb.ToString());
+            }
+            else
+            {
+                File.WriteAllText("dataBase.txt", sb.ToString());
+            }
         }
 
         public void ReadFromFile()
@@ -101,9 +119,9 @@ namespace DomRia.Realization
                 _products.ForEach(Console.WriteLine);
         }
 
-        private Apartment CreateApartment(string title, string description, Location location, Price cost)
-            => new Apartment(title, description, location, cost, Realtor);
-        private House CreateHouse(string title, string description, Location location, Price cost)
-            => new House(title, description, location, cost, Realtor);
+        private Apartment CreateApartment(string title, string description, Location location, Price cost, Contact contact)
+            => new Apartment(title, description, location, cost, contact);
+        private House CreateHouse(string title, string description, Location location, Price cost, Contact contact)
+            => new House(title, description, location, cost, contact);
     }
 }
