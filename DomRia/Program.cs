@@ -7,13 +7,8 @@ namespace DomRia
     {
         static void Main(string[] args)
         {
-            Manager ma = new Manager();
-            ma.ReadFromFile();
-            //ma.AddProduct();
-            //ma.AddProduct();
-            //Console.Clear();
-            ma.ShowAll();
-            //ma.SaveToFile();
+            User u = new User();
+            u.ShowByType("Apartment");
         }
 
     }
