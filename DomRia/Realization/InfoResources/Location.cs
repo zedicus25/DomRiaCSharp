@@ -17,6 +17,15 @@ namespace DomRia.InfoResources
             HouseNumber = houseNumber > 0 ? houseNumber : 1;
         }
 
+        public Location(string location)
+        {
+            string[] arr = location.Split('\t');
+            City = arr[0];
+            District = arr[1];
+            Street = arr[2];
+            HouseNumber = int.Parse(arr[3]);
+        }
+
         public Location(Location location)
         {
             City = location.City;
@@ -32,7 +41,6 @@ namespace DomRia.InfoResources
             sb.Append(District + "\t");
             sb.Append(Street + "\t");
             sb.Append(HouseNumber);
-            sb.AppendLine();
             return sb.ToString();
         }
 

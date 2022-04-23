@@ -87,8 +87,9 @@ namespace DomRia.Realization
 
         public void DeleteProduct(string title)
         { 
-           Product forDelete = _products.FirstOrDefault(p => p.Title == title);
-           _products.Remove(forDelete);
+            Product forDelete = _products.FirstOrDefault(p => p.Title == title);
+            if(forDelete != null)
+                _products.Remove(forDelete);
         }
 
         public void SaveToFile()
@@ -97,6 +98,7 @@ namespace DomRia.Realization
             foreach (var p in _products)
             {
                 sb.AppendLine(p.ToString());
+                sb.AppendLine(new string('-',25));
             }
             if (File.Exists("dataBase.txt"))
             {
@@ -110,7 +112,24 @@ namespace DomRia.Realization
 
         public void ReadFromFile()
         {
+            if (File.Exists("dataBase.txt") == false)
+                throw new MissingFieldException();
             
+            string allFile = File.ReadAllText("dataBase.txt");
+            List<string> products = allFile.Split(new string('-',25)).ToList();
+            foreach (var item in products)
+            {
+                List<string> product = item.Split('\n').ToList();
+                for (int i = 0; i < product.Count; i++)
+                    product[i] = product[i].Trim();
+                product.RemoveAll(s => s == "\r" || s == "");
+                if(product.Count == 0)
+                    return;
+                int type = GetIndexByType(product[5]);
+                if(type >= 0)
+                    _products.Add(_create[type]?.Invoke(product[0],product[3],
+                        new Location(product[1]),new Price(product[2]),new Contact(product[4])));
+            }
         }
 
         public void ShowAll()
@@ -119,6 +138,20 @@ namespace DomRia.Realization
                 _products.ForEach(Console.WriteLine);
         }
 
+        private int GetIndexByType(string type)
+        {
+            type = type.ToLower();
+            switch (type)
+            {
+                case "apartment":
+                    return 0;
+                case "house":
+                    return 1;
+            }
+
+            return -1;
+        }
+        
         private Apartment CreateApartment(string title, string description, Location location, Price cost, Contact contact)
             => new Apartment(title, description, location, cost, contact);
         private House CreateHouse(string title, string description, Location location, Price cost, Contact contact)

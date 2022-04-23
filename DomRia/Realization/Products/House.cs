@@ -9,5 +9,10 @@ namespace DomRia.Products
             base(title, description, location, cost, realtor)
         {
         }
+        
+        public override string ToString()
+        {
+            return $"{base.ToString()}House";
+        }
     }
 }

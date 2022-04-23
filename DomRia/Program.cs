@@ -8,11 +8,12 @@ namespace DomRia
         static void Main(string[] args)
         {
             Manager ma = new Manager();
-            ma.AddProduct();
-            ma.AddProduct();
-            Console.Clear();
+            ma.ReadFromFile();
+            //ma.AddProduct();
+            //ma.AddProduct();
+            //Console.Clear();
             ma.ShowAll();
-            ma.SaveToFile();
+            //ma.SaveToFile();
         }
 
     }

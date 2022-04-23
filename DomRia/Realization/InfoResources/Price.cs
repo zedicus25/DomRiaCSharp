@@ -13,6 +13,13 @@ namespace DomRia.InfoResources
             UsdPrice = usdPrice;
             GrnPrice = ConvertToGrn();
         }
+
+        public Price(string price)
+        {
+            string[] arr = price.Split('\t');
+            UsdPrice = int.Parse(arr[0].Replace("USD", ""));
+            GrnPrice = int.Parse(arr[1].Replace("GRN", ""));
+        }
         
         private double ConvertToGrn() => UsdPrice * 29.94;
 
@@ -21,7 +28,6 @@ namespace DomRia.InfoResources
             StringBuilder sb = new StringBuilder();
             sb.Append(UsdPrice + "USD\t");
             sb.Append(GrnPrice + "GRN\t");
-            sb.AppendLine();
             return sb.ToString();
         }
 

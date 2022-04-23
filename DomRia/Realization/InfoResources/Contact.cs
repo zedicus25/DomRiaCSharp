@@ -17,6 +17,14 @@ namespace DomRia.InfoResources
             PhoneNumber = phoneNumber;
         }
 
+        public Contact(string contact)
+        {
+            string[] arr = contact.Split('\t');
+            Name = arr[0];
+            LastName = arr[1];
+            PhoneNumber = arr[2];
+        }
+
         public Contact(Contact realtor)
         {
             Name = realtor.Name;
@@ -27,11 +35,9 @@ namespace DomRia.InfoResources
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Realtor:");
-            sb.Append("  " + Name + "\t");
+            sb.Append(Name + "\t");
             sb.Append(LastName + "\t");
             sb.Append(PhoneNumber);
-            sb.AppendLine();
             return sb.ToString();
         }
 
