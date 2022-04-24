@@ -40,7 +40,7 @@ namespace DomRia.Realization
             GC.Collect(GC.GetGeneration(tmp));
         }
         
-        public void ShowByDescending()
+        /*public void ShowByDescending()
         {
             List<Product> tmp = new List<Product>(_products);
             tmp.Sort(SortingFilters.Descending);
@@ -54,12 +54,28 @@ namespace DomRia.Realization
             tmp.Sort(SortingFilters.Ascending);
             tmp.ForEach(Console.WriteLine);
             GC.Collect(GC.GetGeneration(tmp));
-        }
+        }*/
 
         public void ShowByType(string type)
         {
             List<Product> tmp = new List<Product>();
             tmp = _products.FindAll(p => p.GetType().Name == type);
+            tmp.ForEach(Console.WriteLine);
+            GC.Collect(GC.GetGeneration(tmp));
+        }
+
+        public void ShowByCity(string city)
+        {
+            List<Product> tmp = new List<Product>();
+            tmp = _products.FindAll(p => p.Location.City == city);
+            tmp.ForEach(Console.WriteLine);
+            GC.Collect(GC.GetGeneration(tmp));
+        }
+        
+        public void ShowByDistrict(string city, string district)
+        {
+            List<Product> tmp = new List<Product>();
+            tmp = _products.FindAll(p => p.Location.City == city && p.Location.District == district);
             tmp.ForEach(Console.WriteLine);
             GC.Collect(GC.GetGeneration(tmp));
         }
